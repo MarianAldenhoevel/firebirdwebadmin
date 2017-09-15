@@ -5,7 +5,6 @@ EXPOSE 80
 LABEL description="FirebirdWebAdmin 3.4.0 webbased interface to a firebird sql server"
 LABEL maintainer="marian.aldenhoevel@marian-aldenhoevel.de"
 
-ENV SYSDBA_PASSWORD="masterkey" DB_FILE=/db/master.fdb 
 ARG DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /app
