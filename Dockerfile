@@ -1,4 +1,4 @@
-FROM php:5.6-apache
+FROM php:7.3-apache-buster
 
 EXPOSE 80
 
@@ -6,20 +6,20 @@ LABEL description="FirebirdWebAdmin 3.4.0 webbased interface to a firebird sql s
 LABEL maintainer="marian.aldenhoevel@marian-aldenhoevel.de"
 
 ARG DEBIAN_FRONTEND=noninteractive
+ARG APP_VERSION=3.4.1
 
-WORKDIR /app
+WORKDIR /var/www/html
 
 RUN \
-	rm /etc/apache2/mods-available/php5.load \
-	&& apt-get update \
-	&& apt-get install -y --no-install-recommends php5-interbase libapache2-mod-php5 git-core firebird2.5-classic-common \
-	&& php5enmod interbase \
+	# rm /etc/apache2/mods-available/php5.load \
+	apt-get update \
+	&& apt-get install -y --no-install-recommends firebird-dev firebird3.0-utils \
+	&& docker-php-ext-install interbase \
+	&& docker-php-ext-enable interbase \
 	&& ln -s /usr/bin/isql-fb /usr/bin/isql \
-	&& git clone git://github.com/mariuz/firebirdwebadmin.git . \
-	&& ln -s /app /var/www/html/firebirdwebadmin \
-	&& rm -rf .git \
-	&& apt-get purge -y git git-core git-man libcurl3-gnutls liberror-perl \
-	&& apt-get autoremove -y \
+	&& curl https://codeload.github.com/mariuz/firebirdwebadmin/tar.gz/${APP_VERSION} | tar zxv --strip-components=1 \
+	&& apt-get purge -y firebird-dev \
+	&& apt-get autoremove -y --purge \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 	
