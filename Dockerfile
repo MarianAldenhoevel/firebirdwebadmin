@@ -10,8 +10,7 @@ ARG APP_VERSION=3.4.1
 
 WORKDIR /var/www/html
 
-RUN \
-	# rm /etc/apache2/mods-available/php5.load \
+RUN \	
 	apt-get update \
 	&& apt-get install -y --no-install-recommends firebird-dev firebird3.0-utils \
 	&& docker-php-ext-install interbase \
