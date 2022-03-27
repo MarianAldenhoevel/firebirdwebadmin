@@ -29,3 +29,6 @@ RUN \
 #	&& apt-get install -y --no-install-recommends iputils-ping telnet nano file net-tools curl procps	
 
 ADD . ./
+
+HEALTHCHECK --interval=5m --timeout=3s \
+	CMD curl -f http://localhost:80 || exit 1
