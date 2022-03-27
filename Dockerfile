@@ -31,4 +31,4 @@ RUN \
 ADD . ./
 
 HEALTHCHECK --interval=5m --timeout=3s \
-	CMD curl -f http://localhost:80 || exit 1
+	CMD curl -f http://localhost/database.php || exit 1
